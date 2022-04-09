@@ -10,7 +10,10 @@ rm(list = ls())
 set.seed(1234)
 options(scipen=999)
 
-setwd("/Users/adrianharris/Desktop/MDML-Project")
+
+# setwd("/Users/adrianharris/Desktop/MDML-Project")
+
+setwd("/Users/adrianharris/Desktop/Messy-Data-Project")
 
 # Getting players 
 dataList <- vector("list", 10)
@@ -38,13 +41,12 @@ for(i in 1:max(length(playerOne),length(playerTwo))){
 }
 
 
-pagesRange <- 1:50000
-maxPage <- 250
-spots <- round(max(pagesRange)/maxPage)
-
-n <- length(pagesRange)
-idx <- sample(rep(1:spots, each = ceiling(n /spots))[1:n], replace = F)
-urlList <- split(urls, idx)
+#pagesRange <- 1:50000
+#maxPage <- 250
+#spots <- round(max(pagesRange)/maxPage)
+#n <- length(pagesRange)
+#idx <- sample(rep(1:spots, each = ceiling(n /spots))[1:n], replace = F)
+#urlList <- split(urls, idx)
 
 
 
@@ -56,8 +58,8 @@ urlList <- split(urls, idx)
 # OLD Code
 PlayersData <- vector("list", length(Players))
 
-# 14249 last player
-for(i in 14249:length(Players)){
+# 15321 last player
+for(i in 15321:length(Players)){
   tmp <- read_html(urls[i])  %>% 
     html_table(fill = TRUE)
   
@@ -102,7 +104,7 @@ i
 #length(playerTwo)
 # 28948
 
-write.csv(df,"NewData15.csv", row.names = FALSE)
+write.csv(df,"NewData16.csv", row.names = FALSE)
 
 
 

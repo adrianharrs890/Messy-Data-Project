@@ -10,11 +10,11 @@ rm(list = ls())
 set.seed(1234)
 options(scipen=999)
 
-setwd("/Users/adrianharris/Desktop/MDML-Project")
+setwd("/Users/adrianharris/Desktop/Messy-Data-Project")
 
-dataList <- vector("list", 15)
+dataList <- vector("list", 16)
 
-for(i in 1:15){
+for(i in 1:16){
   dataList[[i]] <- read.csv(paste0('Data/ComparePage/NewData',i,".csv"))
 }
 
@@ -46,6 +46,8 @@ df <- df %>%
 str(df)
 
 # Distribution of Levels
+# Some Skill go to 120 
+# Most go to 99
 df %>%
   filter(Level < 120) %>%
   ggplot(.) + 
@@ -82,13 +84,11 @@ playerOvr <- dfwide %>% select(player, total_xp_overall)
 new <- dflevel %>% left_join(playerOvr)
 str(new)
 
-mod <- lm(total_xp_overall ~. - player, data = dfwide)
+mod <- lm(total_xp_overall ~. - player -level_overall, data = new)
 summary(mod)
 
 mod <- lm(total_xp_overall ~ level_atk + level_cooking, data = dfwide)
 summary(mod)
-
-View(dfwide)
 
 
 # Clustering 
