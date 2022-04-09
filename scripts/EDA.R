@@ -1,0 +1,100 @@
+library(tidyverse)
+library(rvest)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(janitor)
+
+rm(list = ls())
+set.seed(1234)
+options(scipen=999)
+
+setwd("/Users/adrianharris/Desktop/MDML-Project")
+
+dataList <- vector("list", 15)
+
+for(i in 1:15){
+  dataList[[i]] <- read.csv(paste0('Data/ComparePage/NewData',i,".csv"))
+}
+
+df <- do.call(rbind, dataList)
+head(df, 4)
+
+nrow(df)
+# Checking for duplicates 
+
+#nrow(df)
+#nrow(distinct(df))
+#length(unique(df$Player))
+#17755/2
+
+
+#df <- df %>%
+  #distinct()
+
+df <- df %>%
+  mutate(Rank = as.character(Rank),
+         Total.XP = as.character(Total.XP),
+         Level = as.character(Level))
+
+df <- df %>%
+  mutate(Rank = as.numeric(gsub(",","", Rank)),
+         Level = as.numeric(gsub(",","", Level)),
+         Total.XP = as.numeric(gsub(",","", Total.XP)))
+
+str(df)
+
+# Distribution of Levels
+df %>%
+  filter(Level < 120) %>%
+  ggplot(.) + 
+  aes(Level) + 
+  geom_histogram()
+
+# Distribution of Levels by Skill
+df %>%
+  filter(Level < 120) %>%
+  ggplot(.) + 
+  aes(Level) + 
+  geom_histogram() + 
+  facet_wrap(~Skill)
+
+df %>%
+  filter(Level > 120) %>%
+  ggplot(.) + 
+  aes(Level) + 
+  geom_histogram() + 
+  facet_wrap(~Skill)
+
+dfwide <- df %>%
+  select(-Rank)
+
+dfwide<- reshape(dfwide , idvar = "Player", timevar = "Skill", direction = "wide")
+dfwide <- clean_names(dfwide)
+
+head(dfwide)
+str(dfwide)
+# Liner Regression Data Check 
+
+dflevel <- dfwide %>% select(-contains("xp"))
+playerOvr <- dfwide %>% select(player, total_xp_overall)
+new <- dflevel %>% left_join(playerOvr)
+str(new)
+
+mod <- lm(total_xp_overall ~. - player, data = dfwide)
+summary(mod)
+
+mod <- lm(total_xp_overall ~ level_atk + level_cooking, data = dfwide)
+summary(mod)
+
+View(dfwide)
+
+
+# Clustering 
+# EFA
+# Type of player: Pure, Iron man and etc
+
+
+
+
