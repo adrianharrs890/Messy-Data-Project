@@ -83,6 +83,7 @@ dflevel <- dfwide %>% select(-contains("xp"))
 playerOvr <- dfwide %>% select(player, total_xp_overall)
 new <- dflevel %>% left_join(playerOvr)
 str(new)
+head(new)
 
 mod <- lm(total_xp_overall ~. - player -level_overall, data = new)
 summary(mod)
@@ -95,6 +96,24 @@ summary(mod)
 # EFA
 # Type of player: Pure, Iron man and etc
 
+
+head(new)
+
+tmp <- new %>% select(level_atk, level_def,
+                      level_str, level_constiution, 
+                      level_overall, level_crafting,
+                      level_fletching)
+tmp <- tmp %>%
+  mutate(level_atk = as.numeric(level_atk),
+         level_def = as.numeric(level_def),
+         level_str = as.numeric(level_str),
+         level_constiution = as.numeric(level_constiution ),
+         level_overall = as.numeric(level_overall),
+         level_crafting = as.numeric(level_crafting), 
+         level_fletching = as.numeric(level_fletching))
+
+
+ggpairs(tmp)
 
 
 
