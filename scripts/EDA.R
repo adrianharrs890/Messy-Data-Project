@@ -93,9 +93,49 @@ mod <- lm(total_xp_overall ~ level_atk + level_cooking, data = dfwide)
 summary(mod)
 
 
-# Clustering 
+df.clust <- df.fact<-  new 
 # EFA
+library(haven)
+library(factoextra)
+library(psych)
+
+for(i in 1:length(df.fact)){
+  df.fact[, i] <- as.numeric(df.fact[, i])
+}
+
+R = cor(df.fact, use = "complete.obs")
+
+fa1 <- fa(df.fact, nfactors = 9, fm = "pa", rotate = "none", SMC = F)
+
+KMO(R)
+
+plot(fa1$e.values, type = "b", main = "Screeplot")
+
+
+fa2_rotated  <- fa(r = df.fact, nfactors = 3,  fm = "pa", rotate = "varimax", SMC = F)
+
+fit.R <- fa2_rotated$fit.off
+psych::alpha(x = df.fact)
+
+
+# Factorx
+plot(fa2_rotated$loadings, type = "n", xlim = c(-.8, 1.4), ylim = c(-.9,1))
+text(fa2_rotated$loadings,labels=names(df.fact),cex=.7)
+abline(v = 0, h = 0)
+
+
+# Clustering 
+
+
+
+
+
 # Type of player: Pure, Iron man and etc
+
+# Number of 99s
+
+
+
 
 11/3
 
