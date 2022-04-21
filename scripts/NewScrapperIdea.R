@@ -15,7 +15,8 @@ options(scipen=999)
 
 setwd("/Users/adrianharris/Desktop/Messy-Data-Project")
 
-# Getting players 
+# Getting players from the previous idea of 
+# Pulling each skill
 dataList <- vector("list", 10)
 
 for(i in 1:10){
@@ -24,46 +25,41 @@ for(i in 1:10){
 
 atk <- do.call(rbind, dataList)
 
+# Replacing the space with a "+" because thats how the compare page 
+# takes players 
 atk$Player <- gsub(pattern=" ",replacement="+",x=atk$Player)
 
-
+# This will allow us to have about 50k players to pull there 
+# full profile from the compare page 
 Players <- unique(atk$Player)
 
 
+# Splitting the players into two equal vectors to form urls with 
 splitSize <- round(length(Players)/2)
-
 playerOne <- Players[1:splitSize]
 playerTwo <- Players[splitSize:length(Players)]
 
+# Generating Urls 
 urls <- c()
 for(i in 1:max(length(playerOne),length(playerTwo))){
   urls[i] <- paste0("https://secure.runescape.com/m=hiscore/a=13/compare?user1=",playerOne[i],"&user2=",playerTwo[i])
 }
 
 
-#pagesRange <- 1:50000
-#maxPage <- 250
-#spots <- round(max(pagesRange)/maxPage)
-#n <- length(pagesRange)
-#idx <- sample(rep(1:spots, each = ceiling(n /spots))[1:n], replace = F)
-#urlList <- split(urls, idx)
-
-
-
-
-# Write the double for loop 
-# New Code
-
-
-# OLD Code
+# Making a list to fill the webscraped data 
+# it should be the  length of max of player one or player two 
+# but this was a transfer from the old webscrapper
 PlayersData <- vector("list", length(Players))
 
 # 15321 last player
+# The webscraper can only pull about 1k urls (so 2k players) at a time 
+# on a given url for example the last i it stopped at was 15321
+
 for(i in 15321:length(Players)){
   tmp <- read_html(urls[i])  %>% 
-    html_table(fill = TRUE)
+    html_table(fill = TRUE) # the player info is on a table in the page 
   
-  test <- as.data.frame(tmp[[1]])
+  test <- as.data.frame(tmp[[1]]) # Player one is on index 1 
   test$Player = as.character(playerOne[i])
   test$Skill <- c("Overall", "Atk", "Def", "Str", 
                   "Constiution", "Range", "Prayer",
@@ -73,9 +69,9 @@ for(i in 15321:length(Players)){
                   "Agile", "Theiving","Slayer", "Farming",
                   "RuneCrafting", "Hunting", "Construction",
                   "Summoning", "Dungeoneering", "Div", 
-                  "Inven" ,"Arc")
+                  "Inven" ,"Arc") # Making the vector of the order of the skill 
   
-  testtwo <- as.data.frame(tmp[[2]])
+  testtwo <- as.data.frame(tmp[[2]]) # Sam process as above 
   testtwo$Player = as.character(playerTwo[i])
   testtwo$Skill <- c("Overall", "Atk", "Def", "Str", 
                      "Constiution", "Range", "Prayer",
@@ -91,17 +87,18 @@ for(i in 15321:length(Players)){
   
 }
 
+# Joining all the datsets in the list to one
 df <- do.call(rbind, PlayersData)
 
 nrow(df)
 
-# Last Name
-tail(df)
 
-# Last I
+
+# Last I so you know where to start from 
 # 14249
 i
-#length(playerTwo)
+
+#length(playerTwo) <- max number in the plater vec 
 # 28948
 
 write.csv(df,"NewData16.csv", row.names = FALSE)
