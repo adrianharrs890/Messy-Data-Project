@@ -16,13 +16,14 @@ setwd("/Users/adrianharris/Desktop/Messy-Data-Project")
 # Merging the web scrapped datasets of
 # the Compare Page of players into one datset  
 
-dataList <- vector("list", 16)
+dataList <- vector("list", 25)
 
-for(i in 1:16){
+for(i in 1:25){
   dataList[[i]] <- read.csv(paste0('Data/ComparePage/NewData',i,".csv"))
 }
 
 # Now its in long format 
+
 df <- do.call(rbind, dataList)
 head(df, 4)
 
