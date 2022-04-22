@@ -14,8 +14,15 @@ options(scipen=999)
 
 setwd("/Users/adrianharris/Desktop/Messy-Data-Project")
 
-modelingdf <- read.csv('Data/feature_eng_data.csv')
+df <- read.csv('Data/feature_eng_above_5_99s_data.csv')
 
-mod <- lm(total_xp_overall ~. - player -level_overall, data = modelingdf)
+vb_split <- initial_split(df)
+vb_train <- training(vb_split) %>% select(-player, -level_overall)
+vb_test <- testing(vb_split) %>% select(-player, -level_overall)
 
-summary(mod)
+mod <- lm(total_xp_overall ~., data = vb_train)
+
+pred <- predict(mod , newdata = vb_test)
+
+print(sprintf("MSE=%0.2f", sum(mod$residuals^2)/mod$df.residual))
+
