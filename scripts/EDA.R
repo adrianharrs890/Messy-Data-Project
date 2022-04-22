@@ -92,10 +92,10 @@ mod <- lm(total_xp_overall ~. - player -level_overall, data = new)
 summary(mod)
 
 
-# Featuring Enginering 
+# Featuring Engineering 
 
-# EFA took too long there isn't evaraince to seperate 
-df.clust <- df.fact<-  new 
+# EFA took too long there isn't variance to seperate 
+df.clust <-  new 
 
 
 # Clustering 
@@ -141,7 +141,7 @@ new <- new %>% left_join(clustersss, by = 'player' )
 new[is.na(new)] <-1 # Do all the columns besides Total xp 
 
 ### Combat pures
-# Basic Member's Pure: 60 Attack, 80+ Strength, 82+ Magic, 80+ Range, 1 Defence
+# Basic Member's Pure: 60 Attack, 80+ Strength, 82+ Magic, 80+ Range, 1 Defense
 new.copy <- new
 
 names(new)
@@ -155,7 +155,7 @@ new  <- new %>%
 
 
 
-# Obby Mauler Pure [EOC]: 1 attack, 60+ Strength, 1 Defence.
+# Obby Mauler Pure [EOC]: 1 attack, 60+ Strength, 1 Defense.
 new  <- new %>%
   mutate(Obby_Mauler_Pure = ifelse( level_atk == 1 & 
                                        level_str >=60 &
@@ -218,7 +218,6 @@ new  <- new %>%
                               level_summoning %in% c(1,88,99), 1, 0))
 
 
-
 # Summoning Tank/Defence Pure [EOC]: 99 Defence,
 # 1 Strength, 1 Attack, 1 Magic, 1 Range, 1/43/75/99 Prayer, 
 # 99 Constitution, 1/99 Summoning. 
@@ -251,7 +250,9 @@ new$number_of_99s <- rowSums(new == 99)
 # Number of 120s
 new$number_of_120s <- rowSums(new == 120)
 
-# Based on these two plots we will 
+# Based on these two plots we will separate the dataset into two sections
+# People that have 5 or less 99s and people that have above 5 99s
+
 ggplot(new) +
   aes(number_of_99s) +
   geom_histogram()
@@ -260,5 +261,17 @@ ggplot(new) +
   aes(number_of_120s) +
   geom_histogram()
 
-write.csv(new,"Data/feature_eng_data.csv", row.names = FALSE)
+# Dropping them because when modeling 99s and 120s are too predictive of total xp 
+# which makes sense More 99s more xp high total over xp
 
+above5 <- new %>%
+  filter(number_of_99s > 5) %>%
+  select(-number_of_99s, -number_of_120s) 
+
+below5 <- new %>%
+  filter(number_of_99s <= 5)%>%
+  select(-number_of_99s, -number_of_120s)
+
+write.csv(above5,"Data/feature_eng_above_5_99s_data.csv", row.names = FALSE)
+
+write.csv(below5,"Data/feature_eng_below_5_99s_data.csv", row.names = FALSE)
