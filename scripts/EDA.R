@@ -136,7 +136,7 @@ new <- new %>% left_join(clustersss, by = 'player' )
 # the xp differnece between 1 and 14 isnt that much 
 # our pures maybe not be true pure but they will be close enough 
 # to the truth 
-View(new)
+
 
 # new[is.na(new)] <-1 Do all the columns besides Total xp 
 
@@ -250,14 +250,21 @@ new  <- new %>%
 
 
 
-# XGBoost 
+# lightXGBoost 
 # Must Move to new Script
-library(tidymodels)
 
-vb_split <- initial_split(new)
+library(tidymodels)
+library(fastshap)
+
+small <- new %>% sample_n(4000)
+
+vb_split <- initial_split(small)
 vb_train <- training(vb_split)
 vb_test <- testing(vb_split)
 
+
+
+# XGBoost 
 xgb_spec <- boost_tree(
   trees = 1000,
   tree_depth = tune(), min_n = tune(),
@@ -274,7 +281,7 @@ xgb_grid <- grid_latin_hypercube(
   min_n(),
   loss_reduction(),
   sample_size = sample_prop(),
-  finalize(mtry(), df ),
+  finalize(mtry(), new ),
   learn_rate(),
   size = 3
 )
