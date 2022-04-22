@@ -241,13 +241,24 @@ new  <- new %>%
 #they have 10 Constitution and all combat skills are level 1.
 #These are the most commonly found type of skiller.
 
-
-
+new <- new %>% 
+  mutate(Skiller_Pure = ifelse(level_crafting >= 60 & level_constiution ==1, 1,0))
 
 # Number of 99s
+  
+new$number_of_99s <- rowSums(new == 99)
 
 # Number of 120s
+new$number_of_120s <- rowSums(new == 120)
 
+# Based on these two plots we will 
+ggplot(new) +
+  aes(number_of_99s) +
+  geom_histogram()
+
+ggplot(new) +
+  aes(number_of_120s) +
+  geom_histogram()
 
 write.csv(new,"Data/feature_eng_data.csv", row.names = FALSE)
 
