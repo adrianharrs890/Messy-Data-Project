@@ -138,7 +138,7 @@ new <- new %>% left_join(clustersss, by = 'player' )
 # to the truth 
 
 
-# new[is.na(new)] <-1 Do all the columns besides Total xp 
+new[is.na(new)] <-1 # Do all the columns besides Total xp 
 
 ### Combat pures
 # Basic Member's Pure: 60 Attack, 80+ Strength, 82+ Magic, 80+ Range, 1 Defence
