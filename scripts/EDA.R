@@ -249,6 +249,8 @@ new  <- new %>%
 # Number of 120s
 
 
+write.csv(new,"feature_eng_data.csv", row.names = FALSE)
+
 
 # lightXGBoost 
 # Must Move to new Script
@@ -261,6 +263,10 @@ small <- new %>% sample_n(4000)
 vb_split <- initial_split(small)
 vb_train <- training(vb_split)
 vb_test <- testing(vb_split)
+
+# RF
+tree_rec <- recipe(legal_status ~ ., data = trees_train) 
+
 
 
 
