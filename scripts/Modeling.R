@@ -5,6 +5,19 @@
 
 library(tidymodels)
 library(fastshap)
+library(tidyverse)
+library(rvest)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(tidyverse)
+library(janitor)
+
+rm(list = ls())
+set.seed(1234)
+options(scipen=999)
+
+setwd("/Users/adrianharris/Desktop/Messy-Data-Project")
 
 small <- new %>% sample_n(4000)
 
