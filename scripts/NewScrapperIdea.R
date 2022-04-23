@@ -17,6 +17,8 @@ setwd("/Users/adrianharris/Desktop/Messy-Data-Project")
 
 # Getting players from the previous idea of 
 # Pulling each skill
+
+#**Note start scraping from 11 plus in the atk scraper
 dataList <- vector("list", 10)
 
 for(i in 1:10){

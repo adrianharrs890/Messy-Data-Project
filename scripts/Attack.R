@@ -9,7 +9,7 @@ rm(list = ls())
 set.seed(1234)
 options(scipen=999)
 
-setwd("/Users/adrianharris/Desktop/MDML-Project")
+setwd("/Users/adrianharris/Desktop/Messy-Data-Project")
 
 # Attack 
 urls <- c()
@@ -26,9 +26,6 @@ spots <- round(max(pagesRange)/maxPage)
 n <- length(pagesRange)
 idx <- sample(rep(1:spots, each = ceiling(n /spots))[1:n], replace = F)
 urlList <- split(urls, idx)
-
-
-#test <- as.data.frame(idx)
 
               
 dataGrabber <- function(url){
@@ -67,7 +64,7 @@ dataList <- vector("list",length(1:maxPage))
 
 # Page 
 for(i in 1:length(dataList)){
-  dataList[[i]] <- dataGrabber(urlList[[10]][i])
+  dataList[[i]] <- dataGrabber(urlList[[11]][i])
 }
 
 i
@@ -75,10 +72,8 @@ i
 
 df <- do.call(rbind, dataList)
 
-
+View(df)
 # Remember Change the Page number 
-write.csv(df,"RunescapeAtkLeaderboard10.csv", row.names = FALSE)
+write.csv(df,"Data/Atk/RunescapeAtkLeaderboard11.csv", row.names = FALSE)
 
-# 10.17.5.48
-# 
-"RunescapeAtkLeaderboard3.csv" == paste0("RunescapeAtkLeaderboard",3,".csv")
+
