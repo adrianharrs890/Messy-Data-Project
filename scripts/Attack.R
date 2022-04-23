@@ -17,9 +17,16 @@ urls <- c()
 pagesRange <- 1:57797
 maxPage <- 264 
 
+# Making urls 
 for(i in 1:57797){
   urls[i] <- paste0("https://secure.runescape.com/m=hiscore/ranking?category_type=0&table=1&date=1648423839978&time_filter=0&page=",i)
 }
+
+
+# These lines of code takes the urls 
+# Breaks them into 219 chunks of around 220-250 urls within each chunk
+# In theory there are randomly selected player from arcoss all atk skill levels (99-15)
+# Runescape doesn't report below 15
 
 spots <- round(max(pagesRange)/maxPage)
 
@@ -64,7 +71,7 @@ dataList <- vector("list",length(1:maxPage))
 
 # Page 
 for(i in 1:length(dataList)){
-  dataList[[i]] <- dataGrabber(urlList[[11]][i])
+  dataList[[i]] <- dataGrabber(urlList[[12]][i])
 }
 
 i
@@ -72,8 +79,8 @@ i
 
 df <- do.call(rbind, dataList)
 
-View(df)
+
 # Remember Change the Page number 
-write.csv(df,"Data/Atk/RunescapeAtkLeaderboard11.csv", row.names = FALSE)
+write.csv(df,"Data/Atk/RunescapeAtkLeaderboard12.csv", row.names = FALSE)
 
 
