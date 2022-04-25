@@ -16,9 +16,9 @@ setwd("/Users/adrianharris/Desktop/Messy-Data-Project")
 # Merging the web scrapped datasets of
 # the Compare Page of players into one datset  
 
-dataList <- vector("list", 25)
+dataList <- vector("list", 26)
 
-for(i in 1:25){
+for(i in 1:26){
   dataList[[i]] <- read.csv(paste0('Data/ComparePage/NewData',i,".csv"))
 }
 
@@ -264,6 +264,7 @@ ggplot(new) +
 
 # Dropping them because when modeling 99s and 120s are too predictive of total xp 
 # which makes sense More 99s more xp high total over xp
+
 
 above5 <- new %>%
   filter(number_of_99s > 5) %>%
