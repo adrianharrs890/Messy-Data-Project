@@ -19,7 +19,7 @@ setwd("/Users/adrianharris/Desktop/Messy-Data-Project")
 # Pulling each skill
 
 #**Note start scraping from 11 plus in the atk scraper
-dataList <- vector("list", 15)
+dataList <- vector("list", 16)
 
 for(i in 1:15){
   dataList[[i]] <- read_csv(paste0("Data/Atk/RunescapeAtkLeaderboard",i, ".csv"))
@@ -55,11 +55,11 @@ length(playerOne)
 # but this was a transfer from the old webscrapper
 PlayersData <- vector("list", length(Players))
 
-# 28000 last player
+# 29075 last player
 # The webscraper can only pull about 1k urls (so 2k players) at a time 
 # on a given url for example the last i it stopped at was 15321
 
-for(i in 28000:length(Players)){
+for(i in 29075:length(Players)){
   tmp <- read_html(urls[i])  %>% 
     html_table(fill = TRUE) # the player info is on a table in the page 
   
@@ -105,7 +105,7 @@ i
 #length(playerTwo) <- max number in the plater vec 
 # 28948
 
-write.csv(df,"NewData16.csv", row.names = FALSE)
+write.csv(df,"NewData27.csv", row.names = FALSE)
 
 
 
