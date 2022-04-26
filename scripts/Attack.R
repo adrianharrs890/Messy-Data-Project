@@ -71,7 +71,7 @@ dataList <- vector("list",length(1:maxPage))
 
 # Page 
 for(i in 1:length(dataList)){
-  dataList[[i]] <- dataGrabber(urlList[[15]][i])
+  dataList[[i]] <- dataGrabber(urlList[[16]][i])
 }
 
 i
@@ -80,6 +80,6 @@ df <- do.call(rbind, dataList)
 
 
 # Remember Change the Page number 
-write.csv(df,"Data/Atk/RunescapeAtkLeaderboard15.csv", row.names = FALSE)
+write.csv(df,"Data/Atk/RunescapeAtkLeaderboard16.csv", row.names = FALSE)
 
 
