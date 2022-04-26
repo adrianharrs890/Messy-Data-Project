@@ -55,11 +55,11 @@ length(playerOne)
 # but this was a transfer from the old webscrapper
 PlayersData <- vector("list", length(Players))
 
-# 29075 last player
+# 30142last player
 # The webscraper can only pull about 1k urls (so 2k players) at a time 
 # on a given url for example the last i it stopped at was 15321
 
-for(i in 29075:length(Players)){
+for(i in 30142:length(Players)){
   tmp <- read_html(urls[i])  %>% 
     html_table(fill = TRUE) # the player info is on a table in the page 
   
@@ -99,13 +99,13 @@ nrow(df)
 
 
 # Last "i" so you know where to start from 
-#  29075
+#  30142
 i
 
 #length(playerTwo) <- max number in the plater vec 
 # 28948
 
-write.csv(df,"NewData27.csv", row.names = FALSE)
+write.csv(df,"Data/ComparePage/NewData28.csv", row.names = FALSE)
 
 
 
