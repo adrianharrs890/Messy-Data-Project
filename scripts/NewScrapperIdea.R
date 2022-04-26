@@ -98,8 +98,8 @@ nrow(df)
 
 
 
-# Last I so you know where to start from 
-# 14249
+# Last "i" so you know where to start from 
+#  29075
 i
 
 #length(playerTwo) <- max number in the plater vec 
