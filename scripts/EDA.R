@@ -16,9 +16,9 @@ setwd("/Users/adrianharris/Desktop/Messy-Data-Project")
 # Merging the web scrapped datasets of
 # the Compare Page of players into one datset  
 
-dataList <- vector("list", 25)
+dataList <- vector("list", 27)
 
-for(i in 1:25){
+for(i in 1:27){
   dataList[[i]] <- read.csv(paste0('Data/ComparePage/NewData',i,".csv"))
 }
 
