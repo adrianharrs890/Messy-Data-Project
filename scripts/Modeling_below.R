@@ -25,3 +25,6 @@ mod <- lm(total_xp_overall ~., data = vb_train)
 pred <- predict(mod , newdata = vb_test)
 
 print(sprintf("MSE=%0.2f", sum(mod$residuals^2)/mod$df.residual))
+
+
+summary(mod)
