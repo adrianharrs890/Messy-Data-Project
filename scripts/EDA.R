@@ -51,19 +51,20 @@ df %>%
   geom_histogram()
 
 # Distribution of Levels by Skill
+# Use this one for the paper 
 df %>%
-  filter(Level < 120) %>%
   ggplot(.) + 
   aes(Level) + 
-  geom_histogram() + 
-  facet_wrap(~Skill)
+  geom_histogram(colour="black") + 
+  facet_wrap(~Skill,scales = "free_x") + 
+  ggtitle("Distribution of Levels Across Skills") + 
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  ggsave(path = "~/Desktop/Messy-Data-Project/Figures", filename = "my_plot.png")
 
-df %>%
-  filter(Level > 120) %>%
-  ggplot(.) + 
-  aes(Level) + 
-  geom_histogram() + 
-  facet_wrap(~Skill)
+
+
 
 # Removing Rank because it is too telling of your total xp 
 dfwide <- df %>%
